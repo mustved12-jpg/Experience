@@ -23,10 +23,5 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    # path('Account', AccountApi.as_view()),
-    # path('Account/<int:pk>', AccountApi.as_view()),
+   
 ]
-#ldnvjkbjdsbjk jksfjkler iopemroit
-# er
-
-# errlkerjot oe

@@ -26,6 +26,4 @@ urlpatterns = [
    path('account/', AccountApi.as_view(), name='account'),
    path('account/<int:pk>/', AccountUpdateApi.as_view(), name='account-update'),
 
-   
-
 ]

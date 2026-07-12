@@ -17,7 +17,7 @@ class User(models.Model):
         unique=True,
         editable=False
     )
-    
+
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50)
     password = models.CharField(max_length=10)
@@ -25,7 +25,7 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.username
+        return self.name
 
 
     

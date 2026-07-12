@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from .views import *
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('vehicle/', VehicleApi.as_view(), name='Vehicle'),
+    path('vehicle/<int:pk>/', VehicleUpdateApi.as_view(), name='vehicle-update'),
 ]

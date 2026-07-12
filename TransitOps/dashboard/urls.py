@@ -18,5 +18,6 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    
+    # path('dashboard/', dashboardApi.as_view(), name='home'),
+    # path('dashboard/<int:pk>/', dashboardUpdateApi.as_view(), name='dashboard-update'),
 ]

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('', FuelApi.as_view(), name='fuel'),
+    # path('<int:pk>/', FuelUpdateApi.as_view(), name='fuel-update'),
 ]
 # hello

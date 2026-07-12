@@ -18,5 +18,6 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('drivers/', DriverApi.as_view(), name='drivers'),
+    # path('drivers/<int:pk>/', DriverUpdateApi.as_view(), name='driver-update'),
 ]

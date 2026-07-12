@@ -1,4 +1,6 @@
 from django.db import models
+from trips.models import * 
+from vehicles.models import *
 # Create your models here.
 # class FuelLog(models.Model):
 #     Trip = models.ForeignKey(Trip,on_delete=models.CASCADE)

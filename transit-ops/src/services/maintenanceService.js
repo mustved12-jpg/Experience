@@ -1,37 +1,37 @@
-import { mockData } from '../data/mockData';
-import { delay, getStorageData, setStorageData } from '../utils/storage';
-
-const KEY = 'transitOps_maintenance';
+const API_URL = '/api/maintenance/';
 
 export const maintenanceService = {
   getAll: async () => {
-    await delay();
-    return getStorageData(KEY, mockData.maintenance);
+    const response = await fetch(API_URL);
+    if (!response.ok) throw new Error('Failed to fetch maintenance');
+    return response.json();
   },
   getById: async (id) => {
-    await delay();
-    const items = getStorageData(KEY, mockData.maintenance);
-    return items.find(i => i.id === id);
+    const response = await fetch(`${API_URL}${id}/`);
+    if (!response.ok) throw new Error('Failed to fetch maintenance item');
+    return response.json();
   },
   create: async (item) => {
-    await delay();
-    const items = getStorageData(KEY, mockData.maintenance);
-    const newItem = { ...item, id: `m-${Date.now()}` };
-    setStorageData(KEY, [...items, newItem]);
-    return newItem;
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(item),
+    });
+    if (!response.ok) throw new Error('Failed to create maintenance item');
+    return response.json();
   },
   update: async (id, updates) => {
-    await delay();
-    let items = getStorageData(KEY, mockData.maintenance);
-    items = items.map(item => item.id === id ? { ...item, ...updates } : item);
-    setStorageData(KEY, items);
-    return items.find(i => i.id === id);
+    const response = await fetch(`${API_URL}${id}/`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates),
+    });
+    if (!response.ok) throw new Error('Failed to update maintenance item');
+    return response.json();
   },
   delete: async (id) => {
-    await delay();
-    let items = getStorageData(KEY, mockData.maintenance);
-    items = items.filter(item => item.id !== id);
-    setStorageData(KEY, items);
+    const response = await fetch(`${API_URL}${id}/`, { method: 'DELETE' });
+    if (!response.ok) throw new Error('Failed to delete maintenance item');
     return true;
   }
 };

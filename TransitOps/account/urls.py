@@ -19,11 +19,14 @@ Including another URLconf
 #from TransitOps.account.views import AccountApi
 from django.urls import path
 from django import dispatch
-from django.contrib import admin,include
+from django.contrib import admin
 
 
 urlpatterns = [
     # path('Account', AccountApi.as_view()),
     # path('Account/<int:pk>', AccountApi.as_view()),
 ]
-#herelo
+#ldnvjkbjdsbjk jksfjkler iopemroit
+# er
+
+# errlkerjot oe

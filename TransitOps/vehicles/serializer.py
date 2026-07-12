@@ -1,4 +1,3 @@
-# pyrefly: ignore [missing-import]
 from .models import *
 from rest_framework import serializers
 from .models import Vehicle

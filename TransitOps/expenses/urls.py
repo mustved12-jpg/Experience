@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .views import ExpensesApi, ExpensesUpdateApi
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('expenses/', ExpensesApi.as_view(), name='expenses'),
+    path('expenses/<int:pk>/', ExpensesUpdateApi.as_view(), name='expenses-update'),
 ]

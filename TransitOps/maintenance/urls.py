@@ -16,8 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from .views import *
 urlpatterns = [
-    # path('maintenance/', MaintenanceApi.as_view(), name='home'),
-    # path('maintenance/<int:pk>/', MaintenanceUpdateApi.as_view(), name='maintenance-update'),
+    path('maintenance/', MaintenanceApi.as_view(), name='home'),
+    path('maintenance/<int:pk>/', MaintenanceUpdateApi.as_view(), name='maintenance-update'),
 ]

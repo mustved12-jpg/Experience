@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'account',
     'drivers',
     'expenses',
-    'fule',
+    'fuel',
     'maintenance',
     'trips',
     'vehicles',

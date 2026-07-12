@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from vehicles.models import Vehicle
 from drivers.models import Driver
+
 class Trip(models.Model):
     all_stetus=[
         ('DRAFT','DRAFT'),

@@ -22,16 +22,8 @@ from django import dispatch
 from django.contrib import admin
 from .views import *
 
-urlpatterns = [
-   path('account/', AccountApi.as_view(), name='account'),
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-   path('account/<int:pk>/', AccountUpdateApi.as_view(), name='account-update'),
+urlpatterns = [ 
+   path('account/<int:pk>/', AccountUpdateApi.as_view(), name='account-update'),   
+   path('account/<int:pk>/', AccountUpdateApi.as_view(), name='account-update'),   
 
-=======
-   path('account/<int:pk>/', AccountUpdateApi.as_view(), name='account-update'),   
->>>>>>> Stashed changes
-=======
-   path('account/<int:pk>/', AccountUpdateApi.as_view(), name='account-update'),   
->>>>>>> Stashed changes
 ]

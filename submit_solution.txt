@@ -1,0 +1,100 @@
+TransitOps
+Software Requirements Specification (Hackathon
+Edition)
+1. Introduction
+TransitOps is a centralized transport operations platform to manage vehicles, drivers, dispatch,
+maintenance, fuel, expenses, and analytics.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+2. Purpose
+Replace spreadsheets with a secure web application that enforces business rules and provides
+operational visibility.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+3. Scope
+Authentication, RBAC, Dashboard, Vehicle Registry, Driver Management, Trip Management,
+Maintenance, Fuel & Expense Management, Reports.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+4. Stakeholders
+Fleet Manager, Dispatcher, Safety Officer, Financial Analyst, System Administrator.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+5. User Roles
+Fleet Manager manages vehicles and maintenance. Dispatcher creates and dispatches trips.
+Safety Officer monitors licenses and compliance. Financial Analyst reviews costs and ROI.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+6. Functional Requirements
+Authentication, CRUD operations, trip lifecycle, automatic status updates, maintenance workflow,
+fuel logs, expense tracking, dashboards, CSV export.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+7. Non-Functional Requirements
+Responsive UI, role-based security, auditability, scalability, maintainability, availability,
+performance.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+8. Business Rules
+Unique registration numbers; no dispatch of retired/in-shop vehicles; expired/suspended drivers
+cannot be dispatched; no double assignment; cargo must not exceed capacity;
+dispatch/completion/cancellation automatically update statuses.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+9. Database Design
+Entities: Users, Roles, Vehicles, Drivers, Trips, MaintenanceLogs, FuelLogs, Expenses.
+Relationships: Trip references Vehicle and Driver; Maintenance/Fuel/Expense reference Vehicle.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+10. API Specification
+POST /login, GET/POST/PUT/DELETE /vehicles, /drivers, /trips, /maintenance, /fuel, /expenses,
+GET /dashboard.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+11. UI Screens
+Login, Dashboard, Vehicle Registry, Driver Management, Trip Management, Maintenance, Fuel &
+Expenses, Reports.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+12. KPIs
+Active Vehicles, Available Vehicles, Vehicles in Shop, Active Trips, Fleet Utilization, Fuel Cost,
+Maintenance Cost, Operational Cost, ROI.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+13. Testing
+Unit, integration, API, validation, UI and acceptance testing. Validate all mandatory business rules.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+14. Deployment
+Frontend: React (Vite). Backend: Django REST Framework. Database: MySQL. Authentication:
+JWT.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+15. Future Enhancements
+GPS tracking, notifications, email reminders, document management, PDF exports, predictive
+maintenance.
+Use Cases
+Typical flow: Login → Manage master data → Create Trip → Dispatch → Complete → Maintenance
+→ Reports.
+Appendix: Suggested Tables
+Users(id,name,email,password,role,status)
+Vehicles(id,registration_number,model,type,capacity,odometer,status)
+Drivers(id,name,license_number,expiry,status,safety_score)
+Trips(id,vehicle_id,driver_id,source,destination,cargo,status)
+MaintenanceLogs(id,vehicle_id,issue,cost,status)
+FuelLogs(id,vehicle_id,liters,cost,date)
+Expenses(id,vehicle_id,type,amount,date)

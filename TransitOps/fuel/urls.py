@@ -21,4 +21,3 @@ urlpatterns = [
     # path('', FuelApi.as_view(), name='fuel'),
     # path('<int:pk>/', FuelUpdateApi.as_view(), name='fuel-update'),
 ]
-# hello

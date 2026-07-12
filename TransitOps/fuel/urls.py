@@ -16,8 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from .views import *
 urlpatterns = [
-    # path('', FuelApi.as_view(), name='fuel'),
-    # path('<int:pk>/', FuelUpdateApi.as_view(), name='fuel-update'),
+    path('fuel/', FuelApi.as_view(), name='fuel'),
+    path('fuel/<int:pk>/', FuelUpdateApi.as_view(), name='fuel-update'),
 ]

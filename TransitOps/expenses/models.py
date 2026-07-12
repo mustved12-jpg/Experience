@@ -1,4 +1,5 @@
 from django.db import models
+from vehicles.models import *
 
 # Create your models here.
 class Expense(models.Model):

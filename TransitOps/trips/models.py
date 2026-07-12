@@ -1,7 +1,8 @@
 from django.db import models
 
 # Create your models here.
-from fleet.models import Vehicle, Driver
+from vehicles.models import * 
+from drivers.models import *
 
 class Trip(models.Model):
     all_stetus=[

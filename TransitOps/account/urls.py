@@ -20,8 +20,12 @@ Including another URLconf
 from django.urls import path
 from django import dispatch
 from django.contrib import admin
-
+from .views import *
 
 urlpatterns = [
+   path('account/', AccountApi.as_view(), name='account'),
+   path('account/<int:pk>/', AccountUpdateApi.as_view(), name='account-update'),
+
    
+
 ]

@@ -6,13 +6,19 @@ import { StatusBadge } from '../components/StatusBadge';
 import { vehicleService } from '../services/vehicleService';
 import { tripService } from '../services/tripService';
 import { driverService } from '../services/driverService';
-import { Truck, Map, Users, Wrench } from 'lucide-react';
+import { Truck, Map, Users, Wrench, Clock, Activity } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 export const Dashboard = () => {
   const [stats, setStats] = useState(null);
-  const [recentTrips, setRecentTrips] = useState([]);
+  const [allTrips, setAllTrips] = useState([]);
+  const [allVehicles, setAllVehicles] = useState([]);
   
+  // Filters
+  const [statusFilter, setStatusFilter] = useState('All');
+  const [typeFilter, setTypeFilter] = useState('All');
+  const [regionFilter, setRegionFilter] = useState('All');
+
   useEffect(() => {
     const loadData = async () => {
       const vehicles = await vehicleService.getAll();
@@ -23,17 +29,24 @@ export const Dashboard = () => {
       const availableVehicles = vehicles.filter(v => v.status === 'Available').length;
       const inShopVehicles = vehicles.filter(v => v.status === 'In Shop').length;
       const activeTrips = trips.filter(t => t.status === 'Dispatched').length;
+      const pendingTrips = trips.filter(t => t.status === 'Draft').length;
       const driversOnDuty = drivers.filter(d => d.status === 'On Trip').length;
+      const totalVehicles = vehicles.length;
+      
+      const fleetUtilization = totalVehicles > 0 ? Math.round((activeVehicles / totalVehicles) * 100) : 0;
       
       setStats({
         activeVehicles,
         availableVehicles,
         inShopVehicles,
         activeTrips,
-        driversOnDuty
+        pendingTrips,
+        driversOnDuty,
+        fleetUtilization
       });
       
-      setRecentTrips(trips.slice(-5).reverse());
+      setAllTrips(trips);
+      setAllVehicles(vehicles);
     };
     loadData();
   }, []);
@@ -49,18 +62,56 @@ export const Dashboard = () => {
 
   const columns = [
     { header: 'Trip ID', accessor: 'id' },
-    { header: 'Source', accessor: 'source' },
-    { header: 'Destination', accessor: 'destination' },
+    { header: 'Route', render: (row) => `${row.source} → ${row.destination}` },
+    { header: 'Distance', render: (row) => `${row.plannedDistance || 0} km` },
     { header: 'Status', render: (row) => <StatusBadge status={row.status} /> }
   ];
 
+  // Filtering Trips
+  const filteredTrips = allTrips.filter(trip => {
+    const v = allVehicles.find(veh => veh.id === trip.vehicleId);
+    const vType = v ? v.vehicleType : '';
+    
+    if (statusFilter !== 'All' && trip.status !== statusFilter) return false;
+    if (typeFilter !== 'All' && vType !== typeFilter) return false;
+    if (regionFilter !== 'All' && trip.destination !== regionFilter && trip.source !== regionFilter) return false;
+    
+    return true;
+  }).reverse().slice(0, 10); // Show top 10
+
+  const uniqueRegions = [...new Set([...allTrips.map(t => t.source), ...allTrips.map(t => t.destination)])];
+  const uniqueTypes = [...new Set(allVehicles.map(v => v.vehicleType))];
+
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="Available Vehicles" value={stats.availableVehicles} icon={Truck} />
+      <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4">
+        <h2 className="text-2xl font-bold text-slate-800">Platform Dashboard</h2>
+        <div className="flex flex-wrap gap-2">
+          <select className="border border-slate-300 rounded p-2 text-sm bg-white" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
+            <option value="All">All Statuses</option>
+            <option value="Draft">Draft</option>
+            <option value="Dispatched">Dispatched</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <select className="border border-slate-300 rounded p-2 text-sm bg-white" value={typeFilter} onChange={e => setTypeFilter(e.target.value)}>
+            <option value="All">All Vehicle Types</option>
+            {uniqueTypes.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+          <select className="border border-slate-300 rounded p-2 text-sm bg-white" value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
+            <option value="All">All Regions</option>
+            {uniqueRegions.map(r => <option key={r} value={r}>{r}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <StatCard title="Active Vehicles" value={stats.activeVehicles} icon={Truck} />
+        <StatCard title="Available" value={stats.availableVehicles} icon={Truck} />
+        <StatCard title="In Shop" value={stats.inShopVehicles} icon={Wrench} />
         <StatCard title="Active Trips" value={stats.activeTrips} icon={Map} />
-        <StatCard title="Drivers On Duty" value={stats.driversOnDuty} icon={Users} />
-        <StatCard title="Vehicles In Shop" value={stats.inShopVehicles} icon={Wrench} />
+        <StatCard title="Pending Trips" value={stats.pendingTrips} icon={Clock} />
+        <StatCard title="Fleet Util. (%)" value={`${stats.fleetUtilization}%`} icon={Activity} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -106,7 +157,7 @@ export const Dashboard = () => {
 
       <Card className="p-6">
         <h3 className="text-lg font-medium text-slate-800 mb-4">Recent Trips</h3>
-        <Table columns={columns} data={recentTrips} />
+        <Table columns={columns} data={filteredTrips} />
       </Card>
     </div>
   );

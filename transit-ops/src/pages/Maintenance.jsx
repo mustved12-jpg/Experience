@@ -41,9 +41,10 @@ export const Maintenance = () => {
 
   const handleStatusChange = async (logId, newStatus, vehicleId) => {
     await maintenanceService.update(logId, { status: newStatus });
-    if (newStatus === 'Active') {
+    const vehicle = vehicles.find(v => v.id === vehicleId);
+    if (newStatus === 'Active' && vehicle && vehicle.status !== 'Retired') {
       await vehicleService.update(vehicleId, { status: 'In Shop' });
-    } else if (newStatus === 'Closed') {
+    } else if (newStatus === 'Closed' && vehicle && vehicle.status !== 'Retired') {
       await vehicleService.update(vehicleId, { status: 'Available' });
     }
     loadData();
@@ -66,7 +67,8 @@ export const Maintenance = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await maintenanceService.create(formData);
-    if (formData.status === 'Active') {
+    const vehicle = vehicles.find(v => v.id === formData.vehicleId);
+    if (formData.status === 'Active' && vehicle && vehicle.status !== 'Retired') {
       await vehicleService.update(formData.vehicleId, { status: 'In Shop' });
     }
     setIsModalOpen(false);

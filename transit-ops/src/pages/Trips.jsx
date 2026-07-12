@@ -61,6 +61,7 @@ export const Trips = () => {
   const columns = [
     { header: 'ID', accessor: 'id' },
     { header: 'Route', render: (row) => `${row.source} → ${row.destination}` },
+    { header: 'Distance', render: (row) => `${row.plannedDistance || 0} km` },
     { header: 'Vehicle ID', accessor: 'vehicleId' },
     { header: 'Driver ID', accessor: 'driverId' },
     { header: 'Status', render: (row) => <StatusBadge status={row.status} /> },
@@ -105,7 +106,15 @@ export const Trips = () => {
   };
 
   const availableVehicles = vehicles.filter(v => v.status === 'Available');
-  const availableDrivers = drivers.filter(d => d.status === 'Available');
+  const availableDrivers = drivers.filter(d => {
+    const isAvailable = d.status === 'Available';
+    // Set both to midnight to compare just the dates accurately
+    const expiryDate = new Date(d.licenseExpiryDate);
+    expiryDate.setHours(0,0,0,0);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    return isAvailable && expiryDate >= today;
+  });
 
   return (
     <div className="space-y-6">

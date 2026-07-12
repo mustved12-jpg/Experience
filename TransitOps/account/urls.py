@@ -14,16 +14,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+# pyrefly: ignore [missing-import]
+#from TransitOps.account.views import AccountApi
+from django.urls import path
+from django import dispatch
 from django.contrib import admin
-from django.urls import path,include
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('/', include('dashboard.urls')),
-    path('account/', include('account.urls')),
-    path('drivers/', include('drivers.urls')),
-    path('expenses/', include('expenses.urls')),
-    path('trips/', include('trips.urls')),
-    path('vehicle/', include('vehicles.urls')),
-    
+    # path('Account', AccountApi.as_view()),
+    # path('Account/<int:pk>', AccountApi.as_view()),
 ]

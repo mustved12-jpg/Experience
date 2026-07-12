@@ -18,5 +18,6 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('maintenance/', MaintenanceApi.as_view(), name='home'),
+    # path('maintenance/<int:pk>/', MaintenanceUpdateApi.as_view(), name='maintenance-update'),
 ]

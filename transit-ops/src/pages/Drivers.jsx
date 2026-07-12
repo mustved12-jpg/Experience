@@ -16,7 +16,7 @@ export const Drivers = () => {
   const [editingId, setEditingId] = useState(null);
   
   const initialForm = {
-    name: '', licenseNumber: '', licenseCategory: 'Standard', licenseExpiryDate: '', contactNumber: '', status: 'Available'
+    fullName: '', licenseNumber: '', licenseCategory: 'Standard', licenseExpiryDate: '', contactNumber: '', status: 'Available'
   };
   const [formData, setFormData] = useState(initialForm);
 
@@ -32,7 +32,7 @@ export const Drivers = () => {
   };
 
   const filteredDrivers = drivers.filter(d => 
-    d.name.toLowerCase().includes(search.toLowerCase()) ||
+    d.fullName.toLowerCase().includes(search.toLowerCase()) ||
     d.licenseNumber.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -45,7 +45,7 @@ export const Drivers = () => {
   const openEditModal = (driver) => {
     setEditingId(driver.id);
     setFormData({
-      name: driver.name,
+      fullName: driver.fullName,
       licenseNumber: driver.licenseNumber,
       licenseCategory: driver.licenseCategory,
       licenseExpiryDate: driver.licenseExpiryDate,
@@ -63,7 +63,7 @@ export const Drivers = () => {
   };
 
   const columns = [
-    { header: 'Name', accessor: 'name' },
+    { header: 'Name', accessor: 'fullName' },
     { header: 'License No.', accessor: 'licenseNumber' },
     { header: 'Category', accessor: 'licenseCategory' },
     { header: 'Safety Score', render: (row) => `${row.safetyScore}/100` },
@@ -119,7 +119,7 @@ export const Drivers = () => {
         <form onSubmit={handleSubmit} className="space-y-4 pt-2">
           <div>
             <label className="block text-sm font-medium text-slate-700">Full Name</label>
-            <input required type="text" className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 border p-2" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+            <input required type="text" className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 border p-2" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>

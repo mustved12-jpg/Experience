@@ -23,7 +23,8 @@ from django.contrib import admin
 from .views import *
 
 urlpatterns = [
-   path('account/', AccountApi.as_view(), name='account'),
-   path('account/<int:pk>/', AccountUpdateApi.as_view(), name='account-update'),
+    path('account/', AccountApi.as_view(), name='account_api'),
+    path('account/<int:pk>/', AccountUpdateApi.as_view(), name='account_api_detail'),
+    
 
 ]
